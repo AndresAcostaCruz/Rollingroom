@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}AI Assistant | Rolling Room{% endblock %}
+{% block content %}
+<h2>Product Assistant</h2>
+<p>Ask about our products and we’ll try to help. Try typing a product name.</p>
+<form method="post" class="d-flex mb-3">
+    <input class="form-control me-2" type="search" name="query" placeholder="Search products" aria-label="Search" required>
+    <button class="btn btn-outline-success" type="submit">Ask</button>
+</form>
+{% if answer is not none %}
+    <div class="alert alert-secondary">{{ answer }}</div>
+{% endif %}
+{% endblock %}

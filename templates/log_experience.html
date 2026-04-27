@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Log Experience | Rolling Room{% endblock %}
+{% block content %}
+<h2>Log Experience</h2>
+<p>You are logging your experience for <strong>{{ registration.product.name }}</strong>, purchased at {{ registration.retailer.name }} on {{ registration.timestamp.strftime('%Y-%m-%d') }}.</p>
+<form method="post">
+    <div class="mb-3">
+        <label for="location" class="form-label">Where did you enjoy this?</label>
+        <input type="text" class="form-control" id="location" name="location" placeholder="e.g., at home, at a friend’s house" required>
+    </div>
+    <div class="mb-3">
+        <label for="session_duration" class="form-label">How long was the session?</label>
+        <select class="form-select" id="session_duration" name="session_duration" required>
+            <option value="" disabled selected>Select duration</option>
+            <option value="Short">Short (under 30 min)</option>
+            <option value="Medium">Medium (30–60 min)</option>
+            <option value="Long">Long (60–90 min)</option>
+            <option value="Extended">Extended / Long Sesh (90+ min)</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Was this enjoyed solo or shared?</label><br>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="group_type" id="solo" value="Solo" required>
+            <label class="form-check-label" for="solo">Solo</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="group_type" id="shared" value="Shared" required>
+            <label class="form-check-label" for="shared">Shared</label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="smoothness" class="form-label">How smooth was the experience? (1=harsh, 5=perfect)</label>
+        <input type="number" class="form-range form-control" id="smoothness" name="smoothness" min="1" max="5" step="1" required>
+    </div>
+    <div class="mb-3">
+        <label for="notes" class="form-label">Any additional notes?</label>
+        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Log</button>
+</form>
+{% endblock %}

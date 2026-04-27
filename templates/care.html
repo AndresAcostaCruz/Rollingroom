@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Care Access | Rolling Room{% endblock %}
+{% block content %}
+<h2>Care Access</h2>
+<p>We believe in supporting our community beyond the session. Explore resources designed to help you and those around you. Participation is optional and respectful—never exploitative.</p>
+
+{% for category in categories %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ category.title }}</h5>
+            <p class="card-text">{{ category.description }}</p>
+            {% if category.links %}
+            <ul class="list-unstyled ms-3">
+                {% for link in category.links %}
+                    <li><a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

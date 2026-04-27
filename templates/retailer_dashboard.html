@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Retailer Dashboard | Rolling Room{% endblock %}
+{% block content %}
+<h2>Retailer Dashboard</h2>
+<p>Welcome, {{ account.email }}. You are viewing data for <strong>{{ retailer.name }}</strong>.</p>
+
+<h4>Summary</h4>
+<p>Total verified registrations: {{ registrations|length }}</p>
+
+<h4>Recent Registrations</h4>
+{% if registrations %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Consumer</th>
+                <th>Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reg in registrations %}
+                <tr>
+                    <td>{{ reg.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ reg.user.username }}</td>
+                    <td>{{ reg.product.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No registrations yet.</p>
+{% endif %}
+
+<h4>Top Consumers at This Store</h4>
+{% if store_top_consumers %}
+    <ol class="list-group list-group-numbered">
+        {% for name, count in store_top_consumers %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    {{ name }}
+                </div>
+                <span class="badge bg-secondary rounded-pill">{{ count }}</span>
+            </li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <p>No consumer data yet.</p>
+{% endif %}
+
+{% endblock %}

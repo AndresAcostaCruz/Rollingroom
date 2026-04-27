@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Rolling Room{% endblock %}
+{% block content %}
+<h2>Welcome, {{ user.username }}!</h2>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h3>Register a Product</h3>
+        <form method="post">
+            <div class="mb-3">
+                <label for="product_id" class="form-label">Product</label>
+                <select class="form-select" id="product_id" name="product_id" required>
+                    <option value="" disabled selected>Select a product</option>
+                    {% for p in products %}
+                        <option value="{{ p.id }}">{{ p.name }} ({{ p.series }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="retailer_id" class="form-label">Retailer</label>
+                <select class="form-select" id="retailer_id" name="retailer_id" required>
+                    <option value="" disabled selected>Select a retailer</option>
+                    {% for r in retailers %}
+                        <option value="{{ r.id }}">{{ r.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="code" class="form-label">Registration Code</label>
+                <input type="text" class="form-control" id="code" name="code" placeholder="Enter unique code" required>
+            </div>
+            <button type="submit" class="btn btn-success">Register</button>
+        </form>
+
+        <hr>
+        <h3>Your Humidor</h3>
+        {% if registrations %}
+            <ul class="list-group">
+                {% for reg in registrations %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            <strong>{{ reg.product.name }}</strong>
+                            <small class="text-muted d-block">{{ reg.retailer.name }} • {{ reg.timestamp.strftime('%Y-%m-%d') }}</small>
+                        </div>
+                        <a href="{{ url_for('log_experience', registration_id=reg.id) }}" class="btn btn-sm btn-outline-primary">Log Experience</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You haven't registered any products yet. Start building your collection!</p>
+        {% endif %}
+    </div>
+
+    <div class="col-md-6">
+        <h3>Your Badges</h3>
+        {% if user_badges %}
+            <ul class="list-group">
+                {% for ub in user_badges %}
+                    <li class="list-group-item">
+                        <span class="badge bg-primary me-2">🏅</span>
+                        <strong>{{ ub.badge.name }}</strong> – {{ ub.badge.description }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No badges yet – register products to earn rewards!</p>
+        {% endif %}
+
+        <hr>
+        <h3>Your Points</h3>
+        <p><strong>{{ points }}</strong> points</p>
+
+        <hr>
+        <h3>Leaderboards</h3>
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>Top Retailers</h5>
+                <ol class="list-group list-group-numbered">
+                    {% for name, count in top_retailers %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                {{ name }}
+                            </div>
+                            <span class="badge bg-secondary rounded-pill">{{ count }}</span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">No data yet.</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            <div class="col-sm-6">
+                <h5>Top Collectors</h5>
+                <ol class="list-group list-group-numbered">
+                    {% for name, count in top_consumers %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                {{ name }}
+                            </div>
+                            <span class="badge bg-secondary rounded-pill">{{ count }}</span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">No data yet.</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

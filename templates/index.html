@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Welcome | Rolling Room Digital Humidor{% endblock %}
+{% block content %}
+<div class="jumbotron p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Rolling Room Digital Humidor</h1>
+        <p class="col-md-8 fs-5">Build your own luxury collection of premium cannabis products, earn badges, and connect with our community.  Register your purchases, unlock rewards, and support care access initiatives all in one elegant platform.</p>
+        <a class="btn btn-primary btn-lg me-2" href="{{ url_for('register') }}" role="button">Get Started</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('login') }}" role="button">Log In</a>
+    </div>
+</div>
+{% endblock %}
