@@ -1,0 +1,30 @@
+name: Deploy Flask App
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect to server and deploy
+        uses: appleboy/ssh-action@v1.0.0
+
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          script: |
+            cd /var/www/app
+            git pull
+
+            source venv/bin/activate
+            pip install -r requirements.txt
+
+            sudo systemctl restart app
+            sudo systemctl restart nginx
